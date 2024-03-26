@@ -7,10 +7,12 @@ from F.question_show import QuestionShow
 from langchain.vectorstores import Chroma
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain_community.llms import Tongyi
-
+from F.custom_LLM import Qwen
 ## llm定义
 def llm():
-    return Tongyi(model_name="qwen-14b-chat",temperature=0.1)    
+    model_path = "/root/autodl-tmp/qwen/Qwen-7B-Chat-Int4"
+    return Qwen(model_path)
+    # return Tongyi(model_name="qwen-14b-chat",temperature=0.1)    
 
 
 # 页面设置
@@ -47,7 +49,7 @@ with st.sidebar:
             file_name = f"./vectores/{vectore_option}"
             st.write(file_name) 
             # 加载文本embeddings模型
-            model_dir = 'C:\\Users\\16122\\Desktop\\notes\\Chat_test\\embedding_model\\iic\\nlp_corom_sentence-embedding_chinese-base'
+            model_dir = '/root/autodl-tmp/iic/nlp_corom_sentence-embedding_chinese-base'
             embeddings = HuggingFaceEmbeddings(model_name=model_dir)
             vectordb = Chroma(
             persist_directory=file_name, 

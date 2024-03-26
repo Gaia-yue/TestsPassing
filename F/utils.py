@@ -24,7 +24,7 @@ def path_check(pathes, state):
         return pathes.index(state)
     else:
         return None
-    
+     
 def generate_vectore(docs,file_name):
     
     text = get_pdf_text(docs)
@@ -40,7 +40,7 @@ def generate_vectore(docs,file_name):
     chunks = splitter.split_text(text)
     chunks = splitter.create_documents(chunks)
     # load embedddings
-    model_dir = 'C:\\Users\\16122\\Desktop\\notes\\Chat_test\\embedding_model\\iic\\nlp_corom_sentence-embedding_chinese-base'
+    model_dir = '/root/autodl-tmp/iic/multi-modal_clip-vit-base-patch16_zh'
     embeddings = HuggingFaceEmbeddings(model_name=model_dir)
     # vector
     local_vector_path = f"./vectores/{file_name}"

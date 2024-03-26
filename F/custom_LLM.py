@@ -146,14 +146,15 @@ Action:
 
 class Qwen(LLM, ABC):
      max_token: int = 10000
-     temperature: float = 0.01
+     temperature: float = 0.1
      top_p = 0.9
      history_len: int = 3
 
-     def __init__(self,model_path):
+     def __init__(self):
          super().__init__()
+         model_path = "/root/autodl-tmp/qwen/Qwen-7B-Chat-Int8"
          self.tokenizer = AutoTokenizer.from_pretrained(
-            model_path,
+            model_path,trust_remote_code=True
          )
          self.model = AutoModel.from_pretrained(
             model_path, trust_remote_code=True, device_map="auto").eval()
@@ -188,7 +189,8 @@ class Qwen(LLM, ABC):
          model_inputs = self.tokenizer([text], return_tensors="pt").to("cuda")
          generated_ids = self.model.generate(
              model_inputs.input_ids,
-             max_new_tokens=512
+             max_new_tokens=512,
+             **self._identifying_params
          )
          generated_ids = [
              output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
