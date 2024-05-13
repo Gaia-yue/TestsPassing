@@ -1,8 +1,8 @@
 import streamlit as st
 import os
+from langchain.memory import ConversationBufferMemory
 
 def init_sesssion():
-    os.environ["DASHSCOPE_API_KEY"] = "sk-6d181d984ea941639b3fa517cc22839b"
     # 组件信息初始化
     if "vectoredb" not in st.session_state:
         st.session_state.vectoredb = None
@@ -22,6 +22,9 @@ def init_sesssion():
     if 'question' not in st.session_state:
         st.session_state['question'] = None
     
+    if 'memory' not in st.session_state:
+        st.session_state.memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+    
     # 屏蔽 model 测试按钮
     if "model_button" not in st.session_state:
         st.session_state.model_button = False
@@ -30,7 +33,10 @@ def init_sesssion():
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-
+    ## 历史题目信息
+    if "question_history_show" not in st.session_state:
+        st.session_state.question_history_show = []
+        
         
     if 'genre' not in st.session_state:
         st.session_state.genre = None

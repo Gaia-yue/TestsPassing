@@ -8,9 +8,6 @@ from langchain_core.output_parsers import JsonOutputParser
 from typing import List, Dict
 from F.RetrievalQusetion import RetrievalQuestion
 
-# Define your desired data structure.
-class Joke(BaseModel):
-    theme: List[str] = Field(description="书本主题章节信息字")
 
 def get_question_chain(vectordb,llm):
     '''
@@ -38,10 +35,6 @@ def get_question_chain(vectordb,llm):
     PROMPT = PromptTemplate(
         template=prompt_template, input_variables=["context", "theme", "history"]
     )
-    # docsearch.as_retriever(
-    #             search_type="mmr",
-    #             search_kwargs={'k': 6, 'lambda_mult': 0.25}
-    #         )
     Question_generation = RetrievalQuestion.from_llm(llm=llm,  retriever=vectordb.as_retriever(search_type="mmr",search_kwargs={'k': 10}), prompt=PROMPT)
     return Question_generation
 
@@ -106,7 +99,6 @@ splits = text_splitter.split_documents(docs)
 
     
 def get_conversation_chain(vectorstore, llm):
-    # 对话使用这个没问题
     """
     输入包含:
     1. 当前题目

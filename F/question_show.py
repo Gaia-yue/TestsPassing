@@ -23,6 +23,7 @@ def QuestionShow():
             else:
                 timu = st.session_state.generate_question_chain({"theme":theme,"history":"".join(st.session_state.question_history)})
                 st.session_state.question = json.loads(timu["result"])
+                st.session_state.question_history_show.append(st.session_state.question)
                 st.session_state.question_history.append(str(st.session_state.question["Q_name"]))
 
     if st.session_state.question != None:
@@ -44,13 +45,13 @@ def QuestionShow():
                 pass
         elif genre == right_Answear:
             with st.container():
-                st.write('you are right')
+                st.write('正确！')
                 st.markdown("#### 问题详解")
                 with st.expander("展开来查看"):
-                    st.text(detials)
+                    st.markdown(detials)
         else:
             with st.container():
-                st.write('you are wrong')
+                st.write('错误！')
                 st.markdown("#### 问题详解")
                 with st.expander("展开来查看",):
                     st.markdown(detials)
